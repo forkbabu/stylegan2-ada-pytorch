@@ -162,7 +162,7 @@ def images(G,device,inputs,space,truncation_psi,label,noise_mode,outdir,start=No
         print('Generating image for frame %d/%d ...' % (idx, len(inputs)))
         
         if (space=='z'):
-            z = torch.from_numpy(i).to(device)
+            z = i.to(device)
             if(start is not None and stop is not None):
                 img = G(z, label, truncation_psi=tp, noise_mode=noise_mode)
                 tp = tp+tp_i
@@ -225,8 +225,6 @@ def slerp(t, v0, v1, DOT_THRESHOLD=0.9995):
     Returns:
         v2 (np.ndarray): Interpolation vector between v0 and v1
     '''
-    v0 = v0.cpu().detach().numpy()
-    v1 = v1.cpu().detach().numpy()
     # Copy the vectors to reuse them later
     v0_copy = np.copy(v0)
     v1_copy = np.copy(v1)
